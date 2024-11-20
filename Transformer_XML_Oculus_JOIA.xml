@@ -1,0 +1,150 @@
+<transformer version="4.5.2">
+  <elements>
+    <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="4.5.2">
+      <name>Direct Mapping Common Data</name>
+      <sequenceNumber>0</sequenceNumber>
+      <enabled>true</enabled>
+      <script>tmp[&apos;Common&apos;][&apos;Company&apos;] = msg[&apos;Company&apos;].toString()
+tmp[&apos;Common&apos;][&apos;ModelName&apos;] = msg[&apos;ModelName&apos;].toString()
+tmp[&apos;Common&apos;][&apos;ROMVersion&apos;] = msg[&apos;ROMVersion&apos;].toString()
+tmp[&apos;Common&apos;][&apos;Version&apos;] = msg[&apos;Version&apos;].toString()
+tmp[&apos;Common&apos;][&apos;Time&apos;] = msg[&apos;Time&apos;].toString()
+tmp[&apos;Common&apos;][&apos;Patient&apos;][&apos;No.&apos;] = msg[&apos;Patient&apos;][&apos;No.&apos;].toString()
+tmp[&apos;Common&apos;][&apos;Patient&apos;][&apos;ID&apos;] = msg[&apos;Patient&apos;][&apos;ID&apos;].toString()</script>
+    </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+    <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="4.5.2">
+      <name>Transormated Date</name>
+      <sequenceNumber>1</sequenceNumber>
+      <enabled>true</enabled>
+      <script>tmp[&apos;Common&apos;][&apos;Date&apos;] = msg[&apos;Date&apos;].toString().replace(/\//g, &quot;-&quot;)</script>
+    </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+    <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="4.5.2">
+      <name>String mapping of general measure + PD</name>
+      <sequenceNumber>2</sequenceNumber>
+      <enabled>true</enabled>
+      <script>// unit is PERHAPS in &quot;mm&quot; ?!?! otherwise we have to define unit seperately (also for the other elements)
+tmp[&apos;Measure&apos;][&apos;VD&apos;] = msg[&apos;VD&apos;].toString().match(/\d+(\.\d+)?/g)
+//tmp[&apos;Measure&apos;][&apos;VD&apos;][&apos;@unit&apos;] = msg[&apos;VD&apos;].toString().replace(/[^a-zA-Z]/g, &quot;&quot;)
+
+// unit is PERHAPS in &quot;deg&quot; ?!?!
+tmp[&apos;Measure&apos;][&apos;AxisStep&apos;] = msg[&apos;AxisStep&apos;].toString().match(/\d/g)
+
+// unit is PERHAPS in &quot;D&quot; ?!?!
+tmp[&apos;Measure&apos;][&apos;DiopterStep&apos;] = msg[&apos;ARDiopterStep&apos;].toString().match(/\d+(\.\d+)?/g)
+
+tmp[&apos;Measure&apos;][&apos;CylinderMode&apos;] = msg[&apos;CylinderMode&apos;].toString().match(/\d+(\.\d+)?/g)
+
+// unit is PERHAPS in &quot;cm&quot; ?!?!
+tmp[&apos;Measure&apos;][&apos;PD&apos;][&apos;WorkingDistance&apos;] = msg[&apos;WorkingDistance&apos;].toString().match(/\d+(\.\d+)?/g)
+
+// unit is PERHAPS in &quot;mm&quot; ?!?!
+tmp[&apos;Measure&apos;][&apos;PD&apos;][&apos;Distance&apos;] = msg[&apos;PD&apos;][&apos;PDList&apos;][&apos;FarPD&apos;].toString()
+tmp[&apos;Measure&apos;][&apos;PD&apos;][&apos;Near&apos;] = msg[&apos;PD&apos;][&apos;PDList&apos;][&apos;NearPD&apos;].toString()</script>
+    </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+    <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="4.5.2">
+      <name>Measurements R</name>
+      <sequenceNumber>3</sequenceNumber>
+      <enabled>false</enabled>
+      <script>tmp[&apos;Measure&apos;][&apos;REF&apos;][&apos;R&apos;][&apos;List&apos;][0][&apos;@No&apos;] = msg[&apos;R&apos;][&apos;AR&apos;][&apos;ARList&apos;][0][&apos;@No&apos;].toString()
+tmp[&apos;Measure&apos;][&apos;REF&apos;][&apos;R&apos;][&apos;List&apos;][0][&apos;Sphere&apos;] = msg[&apos;R&apos;][&apos;AR&apos;][&apos;ARList&apos;][0][&apos;Sphere&apos;].toString()
+tmp[&apos;Measure&apos;][&apos;REF&apos;][&apos;R&apos;][&apos;List&apos;][0][&apos;Cylinder&apos;] = msg[&apos;R&apos;][&apos;AR&apos;][&apos;ARList&apos;][0][&apos;Cylinder&apos;].toString()
+tmp[&apos;Measure&apos;][&apos;REF&apos;][&apos;R&apos;][&apos;List&apos;][0][&apos;Axis&apos;] = msg[&apos;R&apos;][&apos;AR&apos;][&apos;ARList&apos;][0][&apos;Axis&apos;].toString()
+tmp[&apos;Measure&apos;][&apos;REF&apos;][&apos;R&apos;][&apos;List&apos;][0][&apos;SE&apos;] = msg[&apos;R&apos;][&apos;AR&apos;][&apos;ARList&apos;][0][&apos;SE&apos;].toString()
+tmp[&apos;Measure&apos;][&apos;REF&apos;][&apos;R&apos;][&apos;List&apos;][0][&apos;ConfidenceIndex&apos;] = msg[&apos;R&apos;][&apos;AR&apos;][&apos;ARList&apos;][0][&apos;ConfidenceIndex&apos;].toString()</script>
+    </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+    <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="4.5.2">
+      <name>Measurements L</name>
+      <sequenceNumber>4</sequenceNumber>
+      <enabled>false</enabled>
+      <script>tmp[&apos;Measure&apos;][&apos;REF&apos;][&apos;L&apos;][&apos;List&apos;][0][&apos;@No&apos;] = msg[&apos;L&apos;][&apos;AR&apos;][&apos;ARList&apos;][0][&apos;@No&apos;].toString()
+tmp[&apos;Measure&apos;][&apos;REF&apos;][&apos;L&apos;][&apos;List&apos;][0][&apos;Sphere&apos;] = msg[&apos;L&apos;][&apos;AR&apos;][&apos;ARList&apos;][0][&apos;Sphere&apos;].toString()
+tmp[&apos;Measure&apos;][&apos;REF&apos;][&apos;L&apos;][&apos;List&apos;][0][&apos;Cylinder&apos;] = msg[&apos;L&apos;][&apos;AR&apos;][&apos;ARList&apos;][0][&apos;Cylinder&apos;].toString()
+tmp[&apos;Measure&apos;][&apos;REF&apos;][&apos;L&apos;][&apos;List&apos;][0][&apos;Axis&apos;] = msg[&apos;L&apos;][&apos;AR&apos;][&apos;ARList&apos;][0][&apos;Axis&apos;].toString()
+tmp[&apos;Measure&apos;][&apos;REF&apos;][&apos;L&apos;][&apos;List&apos;][0][&apos;SE&apos;] = msg[&apos;L&apos;][&apos;AR&apos;][&apos;ARList&apos;][0][&apos;SE&apos;].toString()
+tmp[&apos;Measure&apos;][&apos;REF&apos;][&apos;L&apos;][&apos;List&apos;][0][&apos;ConfidenceIndex&apos;] = msg[&apos;L&apos;][&apos;AR&apos;][&apos;ARList&apos;][0][&apos;ConfidenceIndex&apos;].toString()</script>
+    </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+    <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="4.5.2">
+      <name>Measurements R iterate (manually)</name>
+      <sequenceNumber>5</sequenceNumber>
+      <enabled>true</enabled>
+      <script>var mes = msg[&apos;R&apos;][&apos;AR&apos;][&apos;ARList&apos;].length();
+logger.info(&quot;Listen Länge R: &quot; + mes);
+
+for (var i = 0; i &lt; mes; i++) {
+
+	//mi = msg[&apos;R&apos;][&apos;AR&apos;][&apos;ARList&apos;][i][&apos;Sphere&apos;].toString();
+	//logger.info(&quot;Nr. &quot; + i + &quot; Sphere: &quot; + mi);
+
+	tmp[&apos;Measure&apos;][&apos;REF&apos;][&apos;R&apos;][&apos;List&apos;][i][&apos;@No&apos;] = msg[&apos;R&apos;][&apos;AR&apos;][&apos;ARList&apos;][i][&apos;@No&apos;].toString();
+	tmp[&apos;Measure&apos;][&apos;REF&apos;][&apos;R&apos;][&apos;List&apos;][i][&apos;Sphere&apos;] = msg[&apos;R&apos;][&apos;AR&apos;][&apos;ARList&apos;][i][&apos;Sphere&apos;].toString();
+	tmp[&apos;Measure&apos;][&apos;REF&apos;][&apos;R&apos;][&apos;List&apos;][i][&apos;Cylinder&apos;] = msg[&apos;R&apos;][&apos;AR&apos;][&apos;ARList&apos;][i][&apos;Cylinder&apos;].toString();
+	tmp[&apos;Measure&apos;][&apos;REF&apos;][&apos;R&apos;][&apos;List&apos;][i][&apos;Axis&apos;] = msg[&apos;R&apos;][&apos;AR&apos;][&apos;ARList&apos;][i][&apos;Axis&apos;].toString();
+	tmp[&apos;Measure&apos;][&apos;REF&apos;][&apos;R&apos;][&apos;List&apos;][i][&apos;SE&apos;] = msg[&apos;R&apos;][&apos;AR&apos;][&apos;ARList&apos;][i][&apos;SE&apos;].toString();
+	tmp[&apos;Measure&apos;][&apos;REF&apos;][&apos;R&apos;][&apos;List&apos;][i][&apos;ConfidenceIndex&apos;] = msg[&apos;R&apos;][&apos;AR&apos;][&apos;ARList&apos;][i][&apos;ConfidenceIndex&apos;].toString();
+
+}</script>
+    </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+    <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="4.5.2">
+      <name>Measurements L iterate (manually)</name>
+      <sequenceNumber>6</sequenceNumber>
+      <enabled>true</enabled>
+      <script>var mesl = msg[&apos;L&apos;][&apos;AR&apos;][&apos;ARList&apos;].length();
+logger.info(&quot;Listen Länge L: &quot; + mesl);
+
+for (var i = 0; i &lt; mesl; i++) {
+
+
+
+	
+	tmp[&apos;Measure&apos;][&apos;REF&apos;][&apos;L&apos;][&apos;List&apos;][i][&apos;@No&apos;] = msg[&apos;L&apos;][&apos;AR&apos;][&apos;ARList&apos;][i][&apos;@No&apos;].toString();
+	tmp[&apos;Measure&apos;][&apos;REF&apos;][&apos;L&apos;][&apos;List&apos;][i][&apos;Sphere&apos;] = msg[&apos;L&apos;][&apos;AR&apos;][&apos;ARList&apos;][i][&apos;Sphere&apos;].toString();
+	tmp[&apos;Measure&apos;][&apos;REF&apos;][&apos;L&apos;][&apos;List&apos;][i][&apos;Cylinder&apos;] = msg[&apos;L&apos;][&apos;AR&apos;][&apos;ARList&apos;][i][&apos;Cylinder&apos;].toString();
+	tmp[&apos;Measure&apos;][&apos;REF&apos;][&apos;L&apos;][&apos;List&apos;][i][&apos;Axis&apos;] = msg[&apos;L&apos;][&apos;AR&apos;][&apos;ARList&apos;][i][&apos;Axis&apos;].toString();
+	tmp[&apos;Measure&apos;][&apos;REF&apos;][&apos;L&apos;][&apos;List&apos;][i][&apos;SE&apos;] = msg[&apos;L&apos;][&apos;AR&apos;][&apos;ARList&apos;][i][&apos;SE&apos;].toString();
+	tmp[&apos;Measure&apos;][&apos;REF&apos;][&apos;L&apos;][&apos;List&apos;][i][&apos;ConfidenceIndex&apos;] = msg[&apos;L&apos;][&apos;AR&apos;][&apos;ARList&apos;][i][&apos;ConfidenceIndex&apos;].toString();
+}</script>
+    </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+    <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="4.5.2">
+      <name>Median</name>
+      <sequenceNumber>7</sequenceNumber>
+      <enabled>true</enabled>
+      <script>tmp[&apos;Measure&apos;][&apos;REF&apos;][&apos;R&apos;][&apos;Median&apos;][&apos;Sphere&apos;] = msg[&apos;R&apos;][&apos;AR&apos;][&apos;ARMedian&apos;][&apos;Sphere&apos;].toString();
+tmp[&apos;Measure&apos;][&apos;REF&apos;][&apos;R&apos;][&apos;Median&apos;][&apos;Cylinder&apos;] = msg[&apos;R&apos;][&apos;AR&apos;][&apos;ARMedian&apos;][&apos;Cylinder&apos;].toString();
+tmp[&apos;Measure&apos;][&apos;REF&apos;][&apos;R&apos;][&apos;Median&apos;][&apos;Axis&apos;] = msg[&apos;R&apos;][&apos;AR&apos;][&apos;ARMedian&apos;][&apos;Axis&apos;].toString();
+tmp[&apos;Measure&apos;][&apos;REF&apos;][&apos;R&apos;][&apos;Median&apos;][&apos;SE&apos;] = msg[&apos;R&apos;][&apos;AR&apos;][&apos;ARMedian&apos;][&apos;SE&apos;].toString();
+
+tmp[&apos;Measure&apos;][&apos;REF&apos;][&apos;L&apos;][&apos;Median&apos;][&apos;Sphere&apos;] = msg[&apos;L&apos;][&apos;AR&apos;][&apos;ARMedian&apos;][&apos;Sphere&apos;].toString();
+tmp[&apos;Measure&apos;][&apos;REF&apos;][&apos;L&apos;][&apos;Median&apos;][&apos;Cylinder&apos;] = msg[&apos;L&apos;][&apos;AR&apos;][&apos;ARMedian&apos;][&apos;Cylinder&apos;].toString();
+tmp[&apos;Measure&apos;][&apos;REF&apos;][&apos;L&apos;][&apos;Median&apos;][&apos;Axis&apos;] = msg[&apos;L&apos;][&apos;AR&apos;][&apos;ARMedian&apos;][&apos;Axis&apos;].toString();
+tmp[&apos;Measure&apos;][&apos;REF&apos;][&apos;L&apos;][&apos;Median&apos;][&apos;SE&apos;] = msg[&apos;L&apos;][&apos;AR&apos;][&apos;ARMedian&apos;][&apos;SE&apos;].toString();</script>
+    </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+  </elements>
+  <inboundTemplate encoding="base64">PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTE2Ij8+CjxEYXRhPgoJPENvbXBhbnk+PC9Db21wYW55PgoJPE1vZGVsTmFtZT48L01vZGVsTmFtZT4KCTxST01WZXJzaW9uPjwvUk9NVmVyc2lvbj4KCTxWZXJzaW9uPjwvVmVyc2lvbj4KCTxEYXRlPjwvRGF0ZT4KCTxUaW1lPjwvVGltZT4KCTxQYXRpZW50PgoJCTxOby4+PC9Oby4+CgkJPElEPjwvSUQ+Cgk8L1BhdGllbnQ+Cgk8Q29tbWVudD48L0NvbW1lbnQ+Cgk8VkQ+PC9WRD4KCTxXb3JraW5nRGlzdGFuY2U+PC9Xb3JraW5nRGlzdGFuY2U+Cgk8QVJEaW9wdGVyU3RlcD48L0FSRGlvcHRlclN0ZXA+Cgk8S01EaW9wdGVyU3RlcD48L0tNRGlvcHRlclN0ZXA+Cgk8QUNDRGlvcHRlclN0ZXA+PC9BQ0NEaW9wdGVyU3RlcD4KCTxBeGlzU3RlcD48L0F4aXNTdGVwPgoJPEN5bGluZGVyTW9kZT48L0N5bGluZGVyTW9kZT4KCTxSZWZyYWN0aXZlSW5kZXg+PC9SZWZyYWN0aXZlSW5kZXg+Cgk8Uj4KCQk8QVI+CgkJCTxBUkxpc3QgTm8gPSAiMSI+CgkJCQk8U3BoZXJlPjwvU3BoZXJlPgoJCQkJPEN5bGluZGVyPjwvQ3lsaW5kZXI+CgkJCQk8QXhpcz48L0F4aXM+CgkJCQk8Q29uZmlkZW5jZUluZGV4PjwvQ29uZmlkZW5jZUluZGV4PgoJCQkJPFNFPjwvU0U+CgkJCTwvQVJMaXN0PgoJCQk8QVJMaXN0IE5vID0gIjIiPgoJCQkJPFNwaGVyZT48L1NwaGVyZT4KCQkJCTxDeWxpbmRlcj48L0N5bGluZGVyPgoJCQkJPEF4aXM+PC9BeGlzPgoJCQkJPENvbmZpZGVuY2VJbmRleD48L0NvbmZpZGVuY2VJbmRleD4KCQkJCTxTRT48L1NFPgoJCQk8L0FSTGlzdD4KCQkJPEFSTGlzdCBObyA9ICIzIj4KCQkJCTxTcGhlcmU+PC9TcGhlcmU+CgkJCQk8Q3lsaW5kZXI+PC9DeWxpbmRlcj4KCQkJCTxBeGlzPjwvQXhpcz4KCQkJCTxDb25maWRlbmNlSW5kZXg+PC9Db25maWRlbmNlSW5kZXg+CgkJCQk8U0U+PC9TRT4KCQkJPC9BUkxpc3Q+CgkJCTxBUk1lZGlhbj4KCQkJCTxTcGhlcmU+PC9TcGhlcmU+CgkJCQk8Q3lsaW5kZXI+PC9DeWxpbmRlcj4KCQkJCTxBeGlzPjwvQXhpcz4KCQkJCTxTRT48L1NFPgoJCQk8L0FSTWVkaWFuPgoJCQk8VHJpYWxMZW5zPgoJCQkJPFNwaGVyZT48L1NwaGVyZT4KCQkJCTxDeWxpbmRlcj48L0N5bGluZGVyPgoJCQkJPEF4aXM+PC9BeGlzPgoJCQk8L1RyaWFsTGVucz4KCQkJPENvbnRhY3RMZW5zPgoJCQkJPFNwaGVyZT48L1NwaGVyZT4KCQkJCTxDeWxpbmRlcj48L0N5bGluZGVyPgoJCQkJPEF4aXM+PC9BeGlzPgoJCQkJPFNFPjwvU0U+CgkJCTwvQ29udGFjdExlbnM+CgkJPC9BUj4KCTwvUj4KCTxMPgoJCTxBUj4KCQkJPEFSTGlzdCBObyA9ICIxIj4KCQkJCTxTcGhlcmU+PC9TcGhlcmU+CgkJCQk8Q3lsaW5kZXI+PC9DeWxpbmRlcj4KCQkJCTxBeGlzPjwvQXhpcz4KCQkJCTxDb25maWRlbmNlSW5kZXg+PC9Db25maWRlbmNlSW5kZXg+CgkJCQk8U0U+PC9TRT4KCQkJPC9BUkxpc3Q+CgkJCTxBUkxpc3QgTm8gPSAiMiI+CgkJCQk8U3BoZXJlPjwvU3BoZXJlPgoJCQkJPEN5bGluZGVyPjwvQ3lsaW5kZXI+CgkJCQk8QXhpcz48L0F4aXM+CgkJCQk8Q29uZmlkZW5jZUluZGV4PjwvQ29uZmlkZW5jZUluZGV4PgoJCQkJPFNFPjwvU0U+CgkJCTwvQVJMaXN0PgoJCQk8QVJNZWRpYW4+CgkJCQk8U3BoZXJlPjwvU3BoZXJlPgoJCQkJPEN5bGluZGVyPjwvQ3lsaW5kZXI+CgkJCQk8QXhpcz48L0F4aXM+CgkJCQk8U0U+PC9TRT4KCQkJPC9BUk1lZGlhbj4KCQkJPFRyaWFsTGVucz4KCQkJCTxTcGhlcmU+PC9TcGhlcmU+CgkJCQk8Q3lsaW5kZXI+PC9DeWxpbmRlcj4KCQkJCTxBeGlzPjwvQXhpcz4KCQkJPC9UcmlhbExlbnM+CgkJCTxDb250YWN0TGVucz4KCQkJCTxTcGhlcmU+PC9TcGhlcmU+CgkJCQk8Q3lsaW5kZXI+PC9DeWxpbmRlcj4KCQkJCTxBeGlzPjwvQXhpcz4KCQkJCTxTRT48L1NFPgoJCQk8L0NvbnRhY3RMZW5zPgoJCTwvQVI+Cgk8L0w+Cgk8UEQ+CgkJPFBETGlzdCBObyA9ICIxIj4KCQkJPEZhclBEPjwvRmFyUEQ+CgkJCTxOZWFyUEQ+PC9OZWFyUEQ+CgkJPC9QRExpc3Q+Cgk8L1BEPgo8L0RhdGE+Cg==</inboundTemplate>
+  <outboundTemplate encoding="base64">PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPE9waHRoYWxtb2xvZ3k+CiAgPENvbW1vbj4KICAgICAgPENvbXBhbnk+PC9Db21wYW55PgogICAgICA8TW9kZWxOYW1lPjwvTW9kZWxOYW1lPgogICAgICA8TWFjaGluZU5vPjwvTWFjaGluZU5vPgogICAgICA8Uk9NVmVyc2lvbj48L1JPTVZlcnNpb24+CiAgICAgIDxWZXJzaW9uPjwvVmVyc2lvbj4KICAgICAgPERhdGU+PC9EYXRlPgogICAgICA8VGltZT48L1RpbWU+CiAgICAgIDxQYXRpZW50PgogICAgICAgICAgIDxOby4+PC9Oby4+CiAgICAgICAgICAgPElEPjwvSUQ+CiAgICAgICAgICAgPEZpcnN0TmFtZT48L0ZpcnN0TmFtZT4KICAgICAgICAgICA8TWlkZGxlTmFtZT48L01pZGRsZU5hbWU+CiAgICAgICAgICAgPExhc3ROYW1lPjwvTGFzdE5hbWU+CiAgICAgICAgICAgPFNleD48L1NleD4KICAgICAgICAgICA8QWdlPjwvQWdlPgogICAgICAgICAgIDxET0I+PC9ET0I+CiAgICAgICAgICAgPE5hbWVKMT48L05hbWVKMT4KICAgICAgICAgICA8TmFtZUoyPjwvTmFtZUoyPgogICAgIDwvUGF0aWVudD4KICAgICA8T3BlcmF0b3I+CiAgICAgICAgICAgPE5vLj48L05vLj4KICAgICAgICAgICA8SUQ+PC9JRD4KICAgICA8L09wZXJhdG9yPgogIDwvQ29tbW9uPgogIDxNZWFzdXJlIHR5cGU9IlJFRiI+CiAgICAgIDxWRCB1bml0PSJtbSI+PC9WRD4KICAgICAgPERpb3B0ZXJTdGVwIHVuaXQ9IkQiPjwvRGlvcHRlclN0ZXA+CiAgICAgIDxBeGlzU3RlcCB1bml0PSJkZWciPjwvQXhpc1N0ZXA+CiAgICAgIDxDeWxpbmRlck1vZGU+LTwvQ3lsaW5kZXJNb2RlPgogICAgICA8UkVGPgogICAgICAgIDxSPgogICAgICAgICAgPExpc3QgTm89IiI+CiAgICAgICAgICAgICAgICAgIDxTcGhlcmUgdW5pdD0iRCI+PC9TcGhlcmU+CiAgICAgICAgICAgICAgICAgIDxDeWxpbmRlciB1bml0PSJEIj48L0N5bGluZGVyPgogICAgICAgICAgICAgICAgICA8QXhpcyB1bml0PSJkZWciPjwvQXhpcz4KICAgICAgICAgICAgICAgICAgPFNFIHVuaXQ9IkQiPjwvU0U+CiAgICAgICAgICAgICAgICAgIDxDYXRhcmFjdE1vZGU+PC9DYXRhcmFjdE1vZGU+CiAgICAgICAgICAgICAgICAgIDxJT0xNb2RlPjwvSU9MTW9kZT4KICAgICAgICAgICAgICAgICAgPENvbmZpZGVuY2VJbmRleD48L0NvbmZpZGVuY2VJbmRleD4KICAgICAgICAgIDwvTGlzdD4KICAgICAgICAgIDxMaXN0IE5vPSIiPgogICAgICAgICAgICAgICAgICA8RXJyb3I+PC9FcnJvcj4KICAgICAgICAgIDwvTGlzdD4KICAgICAgICAgIDxMaXN0IE5vPSIiPgogICAgICAgICAgICAgICAgICA8U3BoZXJlIHVuaXQ9IkQiPjwvU3BoZXJlPgogICAgICAgICAgICAgICAgICA8Q3lsaW5kZXIgdW5pdD0iRCI+PC9DeWxpbmRlcj4KICAgICAgICAgICAgICAgICAgPEF4aXMgdW5pdD0iZGVnIj48L0F4aXM+CiAgICAgICAgICAgICAgICAgIDxTRSB1bml0PSJEIj48L1NFPgogICAgICAgICAgICAgICAgICA8Q2F0YXJhY3RNb2RlPjwvQ2F0YXJhY3RNb2RlPgogICAgICAgICAgICAgICAgICA8SU9MTW9kZT48L0lPTE1vZGU+CiAgICAgICAgICAgICAgICAgIDxDb25maWRlbmNlSW5kZXg+PC9Db25maWRlbmNlSW5kZXg+CiAgICAgICAgICA8L0xpc3Q+CiAgICAgICAgICA8TWVkaWFuPgogICAgICAgICAgICAgICAgICA8U3BoZXJlIHVuaXQ9IkQiPjwvU3BoZXJlPgogICAgICAgICAgICAgICAgICA8Q3lsaW5kZXIgdW5pdD0iRCI+PC9DeWxpbmRlcj4KICAgICAgICAgICAgICAgICAgPEF4aXMgdW5pdD0iZGVnIj48L0F4aXM+CiAgICAgICAgICAgICAgICAgIDxTRSB1bml0PSJEIj48L1NFPgogICAgICAgICAgPC9NZWRpYW4+CiAgICAgICAgPC9SPgogICAgICAgIDxMPgogICAgICAgICAgPExpc3QgTm89IiI+CiAgICAgICAgICAgICAgICAgIDxTcGhlcmUgdW5pdD0iRCI+PC9TcGhlcmU+CiAgICAgICAgICAgICAgICAgIDxDeWxpbmRlciB1bml0PSJEIj48L0N5bGluZGVyPgogICAgICAgICAgICAgICAgICA8QXhpcyB1bml0PSJkZWciPjwvQXhpcz4KICAgICAgICAgICAgICAgICAgPFNFIHVuaXQ9IkQiPjwvU0U+CiAgICAgICAgICAgICAgICAgIDxDYXRhcmFjdE1vZGU+PC9DYXRhcmFjdE1vZGU+CiAgICAgICAgICAgICAgICAgIDxJT0xNb2RlPjwvSU9MTW9kZT4KICAgICAgICAgICAgICAgICAgPENvbmZpZGVuY2VJbmRleD48L0NvbmZpZGVuY2VJbmRleD4KICAgICAgICAgIDwvTGlzdD4KICAgICAgICAgIDxMaXN0IE5vPSIiPgogICAgICAgICAgICAgICAgPFNwaGVyZSB1bml0PSJEIj48L1NwaGVyZT4KICAgICAgICAgICAgICAgIDxDeWxpbmRlciB1bml0PSJEIj48L0N5bGluZGVyPgogICAgICAgICAgICAgICAgPEF4aXMgdW5pdD0iZGVnIj48L0F4aXM+CiAgICAgICAgICAgICAgICA8U0UgdW5pdD0iRCI+PC9TRT4KICAgICAgICAgICAgICAgIDxDYXRhcmFjdE1vZGU+PC9DYXRhcmFjdE1vZGU+CiAgICAgICAgICAgICAgICA8SU9MTW9kZT48L0lPTE1vZGU+CiAgICAgICAgICAgICAgICA8Q29uZmlkZW5jZUluZGV4PjwvQ29uZmlkZW5jZUluZGV4PgogICAgICAgIDwvTGlzdD4KICAgICAgICAgIDxMaXN0IE5vPSIiPgogICAgICAgICAgICAgICAgPFNwaGVyZSB1bml0PSJEIj48L1NwaGVyZT4KICAgICAgICAgICAgICAgIDxDeWxpbmRlciB1bml0PSJEIj48L0N5bGluZGVyPgogICAgICAgICAgICAgICAgPEF4aXMgdW5pdD0iZGVnIj48L0F4aXM+CiAgICAgICAgICAgICAgICA8U0UgdW5pdD0iRCI+PC9TRT4KICAgICAgICAgICAgICAgIDxDYXRhcmFjdE1vZGU+PC9DYXRhcmFjdE1vZGU+CiAgICAgICAgICAgICAgICA8SU9MTW9kZT48L0lPTE1vZGU+CiAgICAgICAgICAgICAgICA8Q29uZmlkZW5jZUluZGV4PjwvQ29uZmlkZW5jZUluZGV4PgogICAgICAgIDwvTGlzdD4KICAgICAgICAgIDxNZWRpYW4+CiAgICAgICAgICAgICAgICAgIDxTcGhlcmUgdW5pdD0iRCI+PC9TcGhlcmU+CiAgICAgICAgICAgICAgICAgIDxDeWxpbmRlciB1bml0PSJEIj48L0N5bGluZGVyPgogICAgICAgICAgICAgICAgICA8QXhpcyB1bml0PSJkZWciPjwvQXhpcz4KICAgICAgICAgICAgICAgICAgPFNFIHVuaXQ9IkQiPjwvU0U+CiAgICAgICAgICA8L01lZGlhbj4KICAgICAgICA8L0w+CiAgICAgIDwvUkVGPgogICAgICA8UEQ+CiAgICAgICAgICAgIDxXb3JraW5nRGlzdGFuY2UgdW5pdD0iY20iPjwvV29ya2luZ0Rpc3RhbmNlPgogICAgICAgICAgICA8RGlzdGFuY2UgdW5pdD0ibW0iPjwvRGlzdGFuY2U+CiAgICAgICAgICAgIDxOZWFyIHVuaXQ9Im1tIj48L05lYXI+CiAgICAgIDwvUEQ+CiAgPC9NZWFzdXJlPgo8L09waHRoYWxtb2xvZ3k+Cg==</outboundTemplate>
+  <inboundDataType>XML</inboundDataType>
+  <outboundDataType>XML</outboundDataType>
+  <inboundProperties class="com.mirth.connect.plugins.datatypes.xml.XMLDataTypeProperties" version="4.5.2">
+    <serializationProperties class="com.mirth.connect.plugins.datatypes.xml.XMLSerializationProperties" version="4.5.2">
+      <stripNamespaces>false</stripNamespaces>
+    </serializationProperties>
+    <batchProperties class="com.mirth.connect.plugins.datatypes.xml.XMLBatchProperties" version="4.5.2">
+      <splitType>Element_Name</splitType>
+      <elementName></elementName>
+      <level>1</level>
+      <query></query>
+      <batchScript></batchScript>
+    </batchProperties>
+  </inboundProperties>
+  <outboundProperties class="com.mirth.connect.plugins.datatypes.xml.XMLDataTypeProperties" version="4.5.2">
+    <serializationProperties class="com.mirth.connect.plugins.datatypes.xml.XMLSerializationProperties" version="4.5.2">
+      <stripNamespaces>false</stripNamespaces>
+    </serializationProperties>
+    <batchProperties class="com.mirth.connect.plugins.datatypes.xml.XMLBatchProperties" version="4.5.2">
+      <splitType>Element_Name</splitType>
+      <elementName></elementName>
+      <level>1</level>
+      <query></query>
+      <batchScript></batchScript>
+    </batchProperties>
+  </outboundProperties>
+</transformer>
