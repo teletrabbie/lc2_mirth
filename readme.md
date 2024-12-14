@@ -4,7 +4,7 @@ Here we will present our tranformer channel for Mirth Connect. The work is in pr
 
 ## References
 
-Some important references reparding the poster:
+Some important references regarding the poster:
 
 * Integrating the Healthcare Enterprise (IHE) Eye Care Technical Committee. IHE Eye Care Technical Framework Supplement, Unified Eye Care Workflow Refractive Measurements Based upon JOIA 1.5 Release, Rev. 1.2 – Trial Implementation [Internet, last request 04.08.2024]. Link: https://www.ihe.net/uploadedFiles/Documents/Eye_Care/IHE_EyeCare_Suppl_U-EYECARE_Refractive.pdf
 * Common Technical Specifications Downloads – Japan Ophthalmic Instrument Association [Internet, last request 25.09.2024]. Link: https://www.joia.or.jp/en/about-joia/standard-specification-dl/
